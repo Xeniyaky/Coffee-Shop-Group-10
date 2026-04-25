@@ -61,5 +61,13 @@ body {
     border-radius: 30px;
     font-weight: 600;
 }
+.member img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 10px auto;
+}
 
 
