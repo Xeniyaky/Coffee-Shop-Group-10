@@ -1,117 +1,66 @@
+/* --- Global & Layout --- */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-color: #f7f3ef;
-  color: #3e2c23;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    margin-bottom: 60px;
+    background-color: #e0d8c8; /* Your New Warm Cream */
+    color: #3e2c23;
 }
 
-header {
-  background-color: #6f4e37;
-  color: white;
-  padding: 20px;
-  text-align: center;
+/* --- Header & Navbar --- */
+/* --- Slimmer Navbar --- */
+.navbar {
+    background-color: #6d4c41 !important;
+    border-bottom: 4px solid #bcaaa4;
+    /* Reduced top and bottom padding from 15px/10px to 5px */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    min-height: 50px; /* Ensures it doesn't collapse too far */
 }
 
-nav {
-  margin-top: 12px;
+/* --- Logo Adjustment --- */
+.navbar-logo {
+    height: 70px; /* Keeps your logo size but controls the container */
+    width: auto;
+    margin-right: 15px;
+    /* Removes any default margin that might be pushing the bar wider */
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
-  font-weight: bold;
+/* --- Nav Links Alignment --- */
+.nav-link {
+    color: #e0d8c8 !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    line-height: 45px; /* Matches the logo height to keep text centered */
 }
 
-nav a:hover {
-  text-decoration: underline;
+.navbar-brand {
+    color: #e0d8c8 !important; /* Cream text on Brown background */
+    font-weight: 600;
 }
 
-main {
-  padding: 30px;
-}
-
+/* --- Content Card --- */
 .card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  max-width: 950px;
-  margin: auto;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    background-color: #fff8e9; /* Your new warm cream color */
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 950px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(109, 76, 65, 0.15);
+    border: 1px solid #d7ccc8;
 }
 
-.button-group {
-  margin-top: 20px;
+/* --- Buttons --- */
+.btn, button {
+    background-color: #6d4c41;
+    color: #e0d8c8 !important;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 600;
 }
 
-.btn,
-button {
-  background-color: #6f4e37;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  margin: 5px;
-  font-size: 14px;
-}
 
-.btn:hover,
-button:hover {
-  background-color: #4e3525;
-}
-
-form input,
-form select {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px;
-  margin-top: 6px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: white;
-}
-
-table, th, td {
-  border: 1px solid #d8cfc7;
-}
-
-th {
-  background-color: #e9ddd2;
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 15px;
-  border-radius: 8px;
-}
-
-.chart-box {
-  margin-top: 30px;
-}
-
-@media (max-width: 768px) {
-  nav a {
-    display: block;
-    margin: 8px 0;
-  }
-
-  main {
-    padding: 15px;
-  }
-}
