@@ -8,22 +8,25 @@
             <input asp-for="CustomerName" class="form-control" placeholder="Enter name" required />
         </div>
 
-        <label class="form-label fw-bold">Items</label>
         <div id="items-container">
-            <div class="row g-2 mb-2 item-row">
-                <div class="col-6">
-                    <input name="DrinkItems" class="form-control" placeholder="Drink Name" required />
+            <div class="row item-row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Item</label>
+                    <input name="DrinkNames" class="form-control" placeholder="e.g. Iced Coffee" required />
                 </div>
-                <div class="col-3">
-                    <select name="Sizes" class="form-select">
-                        <option value="Small">Small</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Large">Large</option>
+                <div class="col-md-3">
+                    <label class="form-label">Size</label>
+                    <select name="Sizes" class="form-control">
+                        <option>Small</option>
+                        <option>Medium</option>
+                        <option>Large</option>
                     </select>
                 </div>
-                <div class="col-3">
-                    <input name="Quantities" type="number" class="form-control" placeholder="Qty" min="1" value="1" />
+                <div class="col-md-2">
+                    <label class="form-label">Qty</label>
+                    <input name="Quantities" type="number" class="form-control" value="1" min="1" />
                 </div>
+                <div class="col-md-1"></div>
             </div>
         </div>
 
@@ -36,14 +39,26 @@
 
 @section Scripts {
     <script>
-        function addItem() {
+                function addItem() {
             const container = document.getElementById('items-container');
             const rows = document.querySelectorAll('.item-row');
             const newRow = rows[0].cloneNode(true);
 
-            // Clear the values in the cloned row so it doesn't copy the text
+            // 1. Clear the values so it's a fresh row
             newRow.querySelectorAll('input').forEach(input => input.value = '');
             newRow.querySelector('select').selectedIndex = 0;
+
+            // 2. Add the Minus button to the cloned row (if it's not already there)
+            // We check if it has a remove-btn already to avoid duplicates
+            if (!newRow.querySelector('.remove-btn')) {
+                const removeCol = document.createElement('div');
+                removeCol.className = 'col-md-1 d-flex align-items-center';
+                removeCol.innerHTML = `
+                    <button type="button" class="btn btn-link text-danger p-0" onclick="this.closest('.item-row').remove()">
+                        <i class="bi bi-dash-circle-fill" style="font-size: 1.5rem;"></i>
+                    </button>`;
+                newRow.appendChild(removeCol);
+            }
 
             container.appendChild(newRow);
         }

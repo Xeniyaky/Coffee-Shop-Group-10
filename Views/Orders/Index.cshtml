@@ -8,6 +8,7 @@
             <a asp-action="Create" class="btn btn-brown">Create New Order</a>
         </div>
 
+        <div class="table-responsive shadow-sm" style="border-radius: 15px; overflow: hidden; border: 1px solid #e0e0e0;">
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
@@ -35,8 +36,14 @@
                             <td>$@order.Total.ToString("F2")</td>
                             <td>@order.OrderDate.ToShortDateString()</td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@order.Id" class="text-primary">Edit</a> |
-                                <a asp-action="Delete" asp-route-id="@order.Id" class="text-danger">Delete</a>
+                                <td class="text-center">
+                                    <a asp-action="Edit" asp-route-id="@order.Id" class="mx-2" style="color: #0d6efd;" title="Edit">
+                                        <i class="bi bi-pencil-square" style="font-size: 1.2rem;"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@order.Id" class="mx-2" style="color: #dc3545;" title="Delete">
+                                        <i class="bi bi-trash3-fill" style="font-size: 1.2rem;"></i>
+                                    </a>
+                                </td>
                             </td>
                         </tr>
                     }
@@ -49,5 +56,6 @@
                 }
             </tbody>
         </table>
+        </div>
     </section>
 </main>

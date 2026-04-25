@@ -75,3 +75,21 @@ body {
     border-radius: 5px;
     font-weight: bold;
 }
+
+/* Table Header Brown */
+.table-dark-custom {
+    background-color: #4b3621 !important;
+    color: #f5f5dc !important;
+}
+
+/* Background Cream */
+body {
+    background-color: #f3ede4;
+}
+
+/* Rounded Card Style */
+.card {
+    border-radius: 20px;
+    border: none;
+    background-color: #fffaf0;
+}
