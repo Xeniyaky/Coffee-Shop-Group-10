@@ -62,4 +62,8 @@ body {
     font-weight: 600;
 }
 
-
+.nav-active-bg {
+    background-color: rgba(255, 255, 255, 0.2); /* A subtle white highlight */
+    border-radius: 5px;
+    font-weight: bold;
+}
