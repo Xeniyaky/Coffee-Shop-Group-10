@@ -3,86 +3,88 @@
 }
 
 <div class="about-container">
-    <h1>About Our Team</h1>
+    <h1 class="text-center">About Our Team</h1>
 
-    <!-- TEAM SECTION -->
-    <div class="team">
-
+    <div class="team-grid">
         <div class="member">
-            <img src="~/images/xeniya.jpg" alt="Xeniya" />
-            <h3>Xeniya Kyrychenko</h3>
-            <p>MVC Development & API Integration</p>
+            <img src="~/images/xeniya.jpg" alt="Xeniya" class="profile-pic" /> <h3>Xeniya Kyrychenko</h3>
+            <p class="role">MVC Development & API Integration</p>
         </div>
 
         <div class="member">
-            <img src="~/images/tiffany.jpg" alt="Tiffany" />
-            <h3>Tiffany Kuo Chang</h3>
-            <p>UI Design & Styling</p>
+            <img src="~/images/tiffany.jpg" alt="Tiffany" class="profile-pic" /> <h3>Tiffany Kuo Chang</h3>
+            <p class="role">UI Design & Styling</p>
         </div>
 
         <div class="member">
-            <img src="~/images/chris.jpg" alt="Chris" />
-            <h3>Christopher Nikiforou</h3>
-            <p>Database Integration</p>
+            <img src="~/images/chris.jpg" alt="Chris" class="profile-pic" /> <h3>Christopher Nikiforou</h3>
+            <p class="role">Database Integration</p>
         </div>
 
         <div class="member">
-            <img src="~/images/adanma.jpg" alt="Adanma" />
-            <h3>Adanma Okoroafor</h3>
-            <p>ERD Design & API Integration</p>
+            <img src="~/images/adanma.jpg" alt="Adanma" class="profile-pic" /> <h3>Adanma Okoroafor</h3>
+            <p class="role">ERD Design & API Integration</p>
         </div>
 
     </div>
 
-    <!-- PROJECT DETAILS -->
-    <div class="project-details">
-
-        <h2>Project Overview</h2>
+    <div class="project-summary text-center">
+        <h2>About Brew Haven</h2>
         <p>
-            Brew Haven is a dynamic ASP.NET MVC coffee shop web application that allows users to
-            manage orders, view analytics, and access nutrition information through an external API.
-            The system integrates a database for persistent data and provides a modern, user-friendly interface.
+            Brew Haven is a dynamic ASP.NET MVC coffee shop application. Our mission was to bridge
+            the gap between simple order management and real-time nutritional insights, creating a
+            powerful tool for both staff and customers.
         </p>
-
-        <h2>Technical Details</h2>
-
-        <h3>API Endpoint Used</h3>
-        <p>
-            API Ninjas Nutrition API:
-            <br />
-            <code>https://api.api-ninjas.com/v1/nutrition?query=</code>
-        </p>
-
-        <h3>Data Model (ERD)</h3>
-        <p>
-            The system includes entities such as Customers, Orders, and Menu Items.
-            Relationships between these entities are defined through an Entity Relationship Diagram (ERD),
-            which supports database-driven operations and structured data management.
-        </p>
-
-        <img src="~/images/erd.png" alt="ERD Diagram" class="erd-img" />
-
-        <h3>CRUD Functionality</h3>
-        <p>
-            The application fully implements Create, Read, Update, and Delete operations.
-            Users can create new orders, view order lists, update order details,
-            and delete records from the system.
-        </p>
-
-        <h3>Technical Challenges & Solutions</h3>
-        <ul>
-            <li>Integrated an external nutrition API and handled inconsistent JSON responses.</li>
-            <li>Resolved GitHub merge conflicts during team collaboration.</li>
-            <li>Connected the application to an external database for persistent storage.</li>
-            <li>Transformed static HTML into a dynamic MVC architecture using Razor views.</li>
-        </ul>
-
-        <h2>GitHub Repository</h2>
-        <p>
-            <a href="https://github.com/Xeniyaky/Coffee-Shop-Group-10/blob/main/README.md" target="_blank">
-                View Full Technical Documentation on GitHub
+        
+        <div class="repo-link-box">
+            <h3>Technical Documentation</h3>
+            <p>For a deep dive into our API integrations, ERD diagrams, and CRUD implementation, please visit our official repository.</p>
+            <a href="https://github.com/Xeniyaky/Coffee-Shop-Group-10" class="btn btn-primary" target="_blank">
+                View Technical README on GitHub
             </a>
-        </p>
-
+        </div>
     </div>
 </div>
+
+<style>
+    .team-grid {
+        display: flex;
+        justify-content: center; /* Changed to center for better balance */
+        flex-wrap: wrap;
+        margin-top: 30px;
+        gap: 20px; /* Adds space between members */
+    }
+
+    .member {
+        text-align: center;
+        margin: 15px;
+        width: 220px;
+    }
+
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #f8f9fa;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 10px;
+    }
+
+    .role {
+        font-style: italic;
+        color: #555;
+    }
+
+    .repo-link-box {
+        background-color: #f8f9fa;
+        padding: 25px;
+        border-radius: 8px;
+        margin-top: 40px;
+        border: 1px solid #dee2e6;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
