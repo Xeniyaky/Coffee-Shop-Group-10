@@ -1,0 +1,27 @@
+ <main>
+  <section class="card">
+    <h2>Enter Order Information</h2>
+
+    <form asp-controller="Orders" asp-action="Create" method="post">
+
+      <label>Customer Name</label>
+      <input type="text" name="CustomerName" placeholder="Enter customer name" />
+
+      <label>Drink Item</label>
+      <input type="text" name="DrinkItem" placeholder="Enter drink name" />
+
+      <label>Size</label>
+      <select name="Size">
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+      </select>
+
+      <label>Quantity</label>
+      <input type="number" name="Quantity" placeholder="Enter quantity" />
+
+      <button type="submit">Submit Order</button>
+
+    </form>
+  </section>
+</main>
