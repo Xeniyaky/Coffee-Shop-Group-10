@@ -51,24 +51,28 @@ namespace CoffeeShopMVC.Controllers
                     {
                         nutritionItems.Add(new NutritionItem
                         {
-                            Name = item.GetProperty("name").ToString(),
-                            Calories = item.GetProperty("calories").ToString(),
-                            ServingSizeG = item.GetProperty("serving_size_g").ToString(),
-                            FatTotalG = item.GetProperty("fat_total_g").ToString(),
-                            ProteinG = item.GetProperty("protein_g").ToString(),
-                            CarbohydratesTotalG = item.GetProperty("carbohydrates_total_g").ToString(),
-                            SugarG = item.GetProperty("sugar_g").ToString()
+                            Name = GetValue(item, "name"),
+                            ServingSizeG = GetValue(item, "serving_size_g"),
+                            FatTotalG = GetValue(item, "fat_total_g"),
+                            CarbohydratesTotalG = GetValue(item, "carbohydrates_total_g"),
+                            SugarG = GetValue(item, "sugar_g")
                         });
                     }
-                }
-                else
-                {
-                    ViewBag.Error = json;
                 }
             }
 
             ViewBag.Query = query;
             return View(nutritionItems);
+        }
+
+        private string GetValue(JsonElement item, string propertyName)
+        {
+            if (item.TryGetProperty(propertyName, out var value))
+            {
+                return value.ToString();
+            }
+
+            return "";
         }
 
         public IActionResult Privacy()

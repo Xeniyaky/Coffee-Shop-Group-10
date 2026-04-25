@@ -1,15 +1,11 @@
-﻿namespace CoffeeShopMVC.Models
+﻿public class OrderItem
 {
-    public class OrderItem
-    {
-        public int Id { get; set; } // PK
+    public int Id { get; set; }
+    public int OrderId { get; set; }
 
-        public int OrderId { get; set; } // FK
-        public Order Order { get; set; }
+    public int? MenuItemId { get; set; }
 
-        public int MenuItemId { get; set; } // FK
-        public MenuItem MenuItem { get; set; }
-
-        public int Quantity { get; set; }
-    }
+    public string DrinkName { get; set; }
+    public string Size { get; set; }
+    public int Quantity { get; set; }
 }

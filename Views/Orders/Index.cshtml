@@ -1,49 +1,53 @@
 @model List<CoffeeShopMVC.Models.Order>
 
-<main>
-  <section class="card">
-    <h2>Current Coffee Orders</h2>
+<main class="container mt-5">
+    <section class="card p-4 shadow-sm">
+        <h2 class="mb-4">Current Coffee Orders</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Customer</th>
-          <th>Drink</th>
-          <th>Size</th>
-          <th>Quantity</th>
-          <th>Total</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+        <div class="mb-3">
+            <a asp-action="Create" class="btn btn-brown">Create New Order</a>
+        </div>
 
-      <tbody>
-        @if (Model != null && Model.Any())
-        {
-          foreach (var order in Model)
-          {
-            <tr>
-              <td>@order.Id</td>
-              <td>@order.CustomerName</td>
-              <td>@order.DrinkItem</td>
-              <td>@order.Size</td>
-              <td>@order.Quantity</td>
-              <td>$@order.Total</td>
-              <td>
-                <a asp-action="Edit" asp-route-id="@order.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@order.Id">Delete</a>
-              </td>
-            </tr>
-          }
-        }
-        else
-        {
-          <tr>
-            <td colspan="7">No orders found.</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Main Item</th> <th>Total Qty</th> <th>Total Price</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-  </section>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.CustomerName</td>
+                            <td>
+                                @(order.OrderItems?.FirstOrDefault()?.DrinkName ?? "No items")
+                                @(order.OrderItems?.Count > 1 ? $" (+{order.OrderItems.Count - 1} more)" : "")
+                            </td>
+                            <td>@order.OrderItems?.Sum(i => i.Quantity)</td>
+                            <td>$@order.Total.ToString("F2")</td>
+                            <td>@order.OrderDate.ToShortDateString()</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@order.Id" class="text-primary">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@order.Id" class="text-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">No orders found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
 </main>

@@ -8,9 +8,21 @@
 
     <p><strong>Order ID:</strong> @Model.Id</p>
     <p><strong>Customer:</strong> @Model.CustomerName</p>
-    <p><strong>Drink:</strong> @Model.DrinkItem</p>
-    <p><strong>Size:</strong> @Model.Size</p>
-    <p><strong>Quantity:</strong> @Model.Quantity</p>
+        <p><strong>Order Summary:</strong></p>
+        <ul>
+            @if (Model.OrderItems != null && Model.OrderItems.Any())
+            {
+                foreach (var item in Model.OrderItems)
+                {
+                    <li>@item.Quantity x @item.DrinkName (@item.Size)</li>
+                }
+            }
+            else
+            {
+                <li>No items found in this order.</li>
+            }
+        </ul>
+        <p><strong>Total Price:</strong> $@Model.Total.ToString("F2")</p>
 
     <form asp-action="DeleteConfirmed" method="post">
       <input type="hidden" asp-for="Id" />

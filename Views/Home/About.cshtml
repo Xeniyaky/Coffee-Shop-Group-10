@@ -1,37 +1,88 @@
-<main>
-  <section class="card">
+@{
+    ViewData["Title"] = "About";
+}
 
-    <h2>Project Team</h2>
-    <p>
-      <strong>Xeniya Kyrychenko, Tiffany Kuo Chang, Christopher Nikiforou, and Adanma Okoroafor:</strong>
-      Collaboratively designed and developed the application, including layout, navigation,
-      CRUD functionality, data visualizations, API integration, and chatbot implementation.
-    </p>
+<div class="about-container">
+    <h1>About Our Team</h1>
 
-    <h2>Project Overview</h2>
-    <p>
-      This project is a dynamic MVC coffee shop management system.
-      It is designed to help manage customer orders, menu items, and sales data.
-      The system includes fully functional CRUD operations, interactive charts,
-      and a chatbot to simulate real customer interactions in a coffee shop environment.
-    </p>
+    <!-- TEAM SECTION -->
+    <div class="team">
 
-    <h2>Logical Data Model</h2>
-    <p>
-      The data model supports the structure of the coffee shop system by organizing
-      customers, orders, menu items, and order details. One customer can place many
-      orders, and each order can include multiple items. Menu items can also appear
-      in many different orders, forming one-to-many relationships within the system.
-    </p>
+        <div class="member">
+            <img src="~/images/xeniya.jpg" alt="Xeniya" />
+            <h3>Xeniya Kyrychenko</h3>
+            <p>MVC Development & API Integration</p>
+        </div>
 
-    <img src="~/images/data-model.png" alt="Logical Data Model" />
+        <div class="member">
+            <img src="~/images/tiffany.jpg" alt="Tiffany" />
+            <h3>Tiffany Kuo Chang</h3>
+            <p>UI Design & Styling</p>
+        </div>
 
-    <h2>GitHub Repository</h2>
-    <p>
-      <a href="https://github.com/Xeniyaky/Coffee-Shop-Group-10" target="_blank">
-        View Project GitHub Repository
-      </a>
-    </p>
+        <div class="member">
+            <img src="~/images/chris.jpg" alt="Chris" />
+            <h3>Christopher Nikiforou</h3>
+            <p>Database Integration</p>
+        </div>
 
-  </section>
-</main>
+        <div class="member">
+            <img src="~/images/adanma.jpg" alt="Adanma" />
+            <h3>Adanma Okoroafor</h3>
+            <p>ERD Design & API Integration</p>
+        </div>
+
+    </div>
+
+    <!-- PROJECT DETAILS -->
+    <div class="project-details">
+
+        <h2>Project Overview</h2>
+        <p>
+            Brew Haven is a dynamic ASP.NET MVC coffee shop web application that allows users to
+            manage orders, view analytics, and access nutrition information through an external API.
+            The system integrates a database for persistent data and provides a modern, user-friendly interface.
+        </p>
+
+        <h2>Technical Details</h2>
+
+        <h3>API Endpoint Used</h3>
+        <p>
+            API Ninjas Nutrition API:
+            <br />
+            <code>https://api.api-ninjas.com/v1/nutrition?query=</code>
+        </p>
+
+        <h3>Data Model (ERD)</h3>
+        <p>
+            The system includes entities such as Customers, Orders, and Menu Items.
+            Relationships between these entities are defined through an Entity Relationship Diagram (ERD),
+            which supports database-driven operations and structured data management.
+        </p>
+
+        <img src="~/images/erd.png" alt="ERD Diagram" class="erd-img" />
+
+        <h3>CRUD Functionality</h3>
+        <p>
+            The application fully implements Create, Read, Update, and Delete operations.
+            Users can create new orders, view order lists, update order details,
+            and delete records from the system.
+        </p>
+
+        <h3>Technical Challenges & Solutions</h3>
+        <ul>
+            <li>Integrated an external nutrition API and handled inconsistent JSON responses.</li>
+            <li>Resolved GitHub merge conflicts during team collaboration.</li>
+            <li>Connected the application to an external database for persistent storage.</li>
+            <li>Transformed static HTML into a dynamic MVC architecture using Razor views.</li>
+        </ul>
+
+        <h2>GitHub Repository</h2>
+        <p>
+            <a href="https://github.com/Xeniyaky/Coffee-Shop-Group-10/blob/main/README.md" target="_blank">
+                View Full Technical Documentation on GitHub
+            </a>
+        </p>
+
+    </div>
+</div>

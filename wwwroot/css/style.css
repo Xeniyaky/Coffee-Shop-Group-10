@@ -61,5 +61,17 @@ body {
     border-radius: 30px;
     font-weight: 600;
 }
+.member img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 10px auto;
+}
 
-
+.nav-active-bg {
+    background-color: rgba(255, 255, 255, 0.2); /* A subtle white highlight */
+    border-radius: 5px;
+    font-weight: bold;
+}
