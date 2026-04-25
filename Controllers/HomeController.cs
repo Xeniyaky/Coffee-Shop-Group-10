@@ -7,6 +7,13 @@ namespace CoffeeShopMVC.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public HomeController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -28,7 +35,7 @@ namespace CoffeeShopMVC.Controllers
 
             if (!string.IsNullOrWhiteSpace(query))
             {
-                var apiKey = "qJjwWaC9tV7wGlMrr9HkQYyiYeFmD4YXlYWDOVlb";
+                var apiKey = _configuration["ApiSettings:ApiKey"];
                 var url = $"https://api.api-ninjas.com/v1/nutrition?query={Uri.EscapeDataString(query)}";
 
                 using var client = new HttpClient();
@@ -40,7 +47,6 @@ namespace CoffeeShopMVC.Controllers
                 if (response.IsSuccessStatusCode && json.Trim().StartsWith("["))
                 {
                     using var document = JsonDocument.Parse(json);
-
                     foreach (var item in document.RootElement.EnumerateArray())
                     {
                         nutritionItems.Add(new NutritionItem
