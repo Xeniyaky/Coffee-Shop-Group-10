@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("76eaa29e-ca8a-4c98-903b-1f79d19bd4b2")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("CoffeeShopMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4176f6c1d5db83f3900fbbe6c73b61b0845d483")]
 [assembly: System.Reflection.AssemblyProductAttribute("CoffeeShopMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CoffeeShopMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

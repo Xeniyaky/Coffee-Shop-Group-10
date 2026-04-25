@@ -1,0 +1,48 @@
+@model List<CoffeeShopMVC.Models.NutritionItem>
+
+<main>
+  <section class="card">
+    <h2>Nutrition Tracker</h2>
+
+    <p>
+      Search for a food or drink to view nutrition information such as carbohydrates, fat, and sugar.
+    </p>
+
+    <form method="get" asp-action="Nutrition">
+      <label>Food or Drink</label>
+      <input type="text" name="query" value="@ViewBag.Query" placeholder="Example: milk" />
+      <button type="submit">Search Nutrition</button>
+    </form>
+
+    @if (Model != null && Model.Any())
+    {
+      <table style="margin-top: 15px;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Serving (g)</th>
+            <th>Carbs</th>
+            <th>Fat</th>
+            <th>Sugar</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var item in Model)
+          {
+            <tr>
+              <td>@item.Name</td>
+              <td>@item.ServingSizeG</td>
+              <td>@item.CarbohydratesTotalG</td>
+              <td>@item.FatTotalG</td>
+              <td>@item.SugarG</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    else if (!string.IsNullOrEmpty(ViewBag.Query))
+    {
+      <p style="margin-top: 15px;">No results found. Try something simple like "milk" or "banana".</p>
+    }
+  </section>
+</main>
