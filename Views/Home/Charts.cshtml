@@ -1,24 +1,174 @@
-<main>
-  <section class="card">
-    <h2>Sales and Order Trends</h2>
-    <p>
-      These charts show sample data for best-selling drinks, order categories,
-      and weekly coffee shop sales.
-    </p>
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Analytics";
 
-    <div class="chart-box">
-      <canvas id="barChart"></canvas>
-    </div>
+    // Capture current query strings as a list for the multi-select logic
+    var selectedProducts = Context.Request.Query["productFilter"].ToList();
+    var currentMin = Context.Request.Query["minPrice"];
+    var currentStart = Context.Request.Query["startDate"];
+    var currentEnd = Context.Request.Query["endDate"];
+}
 
-    <div class="chart-box">
-      <canvas id="pieChart"></canvas>
-    </div>
+<main class="container mt-5">
+    <section class="card p-4 shadow-sm mb-4" style="background-color: #fffaf0; border-radius: 20px; border: none;">
+        <h4 class="mb-3" style="color: #4b3621;"><i class="bi bi-filter-circle me-2"></i>Filter Dashboard</h4>
 
-    <div class="chart-box">
-      <canvas id="lineChart"></canvas>
+        <form method="get" asp-action="Charts" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label fw-bold small">Products</label>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start"
+                            type="button" id="productDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="border-radius: 8px; background: white; color: #4b3621;">
+                        @if (selectedProducts.Count == 0)
+                        {
+                            @:Select Products
+                        }
+                        else if (selectedProducts.Count <= 2)
+                        {
+                            @string.Join(", ", selectedProducts)
+                        }
+                        else
+                        {
+                            @($"{selectedProducts.Count} Products Selected")
+                        }
+                    </button>
+                    <ul class="dropdown-menu p-3 w-100" aria-labelledby="productDropdown" style="border-radius: 12px; border: 1px solid #4b3621;">
+                        @if (ViewBag.AllProducts != null)
+                        {
+                            @foreach (var product in ViewBag.AllProducts)
+                            {
+                                <li>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="productFilter"
+                                               value="@product" id="check-@product"
+                                               @(selectedProducts.Contains(product) ? "checked" : "")>
+                                        <label class="form-check-label text-dark" for="check-@product">@product</label>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold small">Min Total ($)</label>
+                <input type="number" name="minPrice" value="@currentMin" class="form-control" placeholder="0.00" style="border-radius: 8px;" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-bold small">From Date</label>
+                <input type="date" name="startDate" value="@currentStart" class="form-control" style="border-radius: 8px;" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-bold small">To Date</label>
+                <input type="date" name="endDate" value="@currentEnd" class="form-control" style="border-radius: 8px;" />
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-brown w-100" style="border-radius: 8px; padding: 8px;">Apply Filters</button>
+            </div>
+        </form>
+
+        @if (selectedProducts.Any() || !string.IsNullOrEmpty(currentMin))
+        {
+            <div class="mt-4 d-flex gap-2 flex-wrap align-items-center">
+                <span class="text-muted small fw-bold">Active Filters:</span>
+
+                @foreach (var product in selectedProducts)
+                {
+                    // Logic to remove JUST this product from the current list
+                    var otherProducts = selectedProducts.Where(p => p != product).ToList();
+                    var removeUrl = Url.Action("Charts", new
+                    {
+                        productFilter = otherProducts,
+                        minPrice = currentMin,
+                        startDate = currentStart,
+                        endDate = currentEnd
+                    });
+
+                    <a href="@removeUrl"
+                       class="badge rounded-pill p-2 text-decoration-none shadow-sm"
+                       style="background-color: #4b3621 !important; color: #fffaf0 !important;">
+                        @product <i class="bi bi-x-lg ms-1" style="font-size: 0.7rem;"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrEmpty(currentMin))
+                {
+                    var removeMinUrl = Url.Action("Charts", new
+                    {
+                        productFilter = selectedProducts,
+                        startDate = currentStart,
+                        endDate = currentEnd
+                    });
+
+                    <a href="@removeMinUrl"
+                       class="badge rounded-pill p-2 text-decoration-none shadow-sm"
+                       style="background-color: #4b3621 !important; color: #fffaf0 !important;">
+                        Min: $@currentMin <i class="bi bi-x-lg ms-1" style="font-size: 0.7rem;"></i>
+                    </a>
+                }
+
+                <a asp-action="Charts" class="btn btn-link btn-sm text-decoration-none text-muted p-0 ms-2">Clear All</a>
+            </div>
+        }
+    </section>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card p-4 shadow-sm h-100" style="background-color: #fffaf0; border-radius: 20px; border: none;">
+                <h5 class="fw-bold mb-4" style="color: #4b3621;">Daily Revenue Trends</h5>
+                <canvas id="salesChart" style="max-height: 400px;"></canvas>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card p-4 shadow-sm h-100" style="background-color: #fffaf0; border-radius: 20px; border: none;">
+                <h5 class="fw-bold mb-4" style="color: #4b3621;">Drink Popularity</h5>
+                <canvas id="popularityChart" style="max-height: 400px;"></canvas>
+            </div>
+        </div>
     </div>
-  </section>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="~/js/script.js"></script>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        Chart.defaults.color = '#4b3621';
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+        new Chart(document.getElementById('salesChart'), {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.SalesLabels)),
+                datasets: [{
+                    label: 'Revenue ($)',
+                    data: @Html.Raw(Json.Serialize(ViewBag.SalesValues)),
+                    backgroundColor: '#4b3621',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        new Chart(document.getElementById('popularityChart'), {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.DrinkLabels)),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(ViewBag.DrinkValues)),
+                    backgroundColor: ['#4b3621', '#6F4E37', '#A67B5B', '#ECB176', '#FED8B1'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    </script>
+}

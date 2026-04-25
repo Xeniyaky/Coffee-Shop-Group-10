@@ -1,7 +1,8 @@
+using CoffeeShopMVC.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using CoffeeShopMVC.Models;
 
 namespace CoffeeShopMVC.Controllers
 {
@@ -9,9 +10,14 @@ namespace CoffeeShopMVC.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        public HomeController(IConfiguration configuration)
+        // 1. Add this line
+        private readonly Data.ApplicationDbContext _context;
+
+        // 2. Update the constructor to include the context
+        public HomeController(IConfiguration configuration, Data.ApplicationDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -24,8 +30,75 @@ namespace CoffeeShopMVC.Controllers
             return View();
         }
 
-        public IActionResult Charts()
+        public async Task<IActionResult> Charts(List<string> productFilter, decimal? minPrice, DateTime? startDate, DateTime? endDate)
         {
+            // 1. Get the dynamic checklist items from the database
+            ViewBag.AllProducts = await _context.OrderItems
+                .Select(i => i.DrinkName)
+                .Distinct()
+                .ToListAsync();
+
+            // 2. Filter the Orders (Receipts)
+            var query = _context.Orders.Include(o => o.OrderItems).AsQueryable();
+
+            if (productFilter != null && productFilter.Count > 0)
+            {
+                // Filters for orders that contain at least one of the selected products
+                query = query.Where(o => o.OrderItems.Any(i => productFilter.Contains(i.DrinkName)));
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(o => o.Total >= minPrice.Value);
+            }
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(o => o.OrderDate >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(o => o.OrderDate <= endDate.Value);
+            }
+
+            var filteredOrders = await query.ToListAsync();
+
+            // --- DATA FOR CHART 1: Sales Over Time ---
+            var salesOverTime = filteredOrders
+                .GroupBy(o => o.OrderDate.Date)
+                .Select(g => new {
+                    Date = g.Key.ToShortDateString(),
+                    Total = g.Sum(o => o.Total)
+                })
+                .OrderBy(g => DateTime.Parse(g.Date))
+                .ToList();
+
+            // --- DATA FOR CHART 2: Product Popularity ---
+            // Start with all items from those orders
+            var itemsForChart = filteredOrders.SelectMany(o => o.OrderItems).AsQueryable();
+
+            // CRITICAL FIX: Re-filter the items so 'hitchhikers' (unselected items) don't show on the wheel
+            if (productFilter != null && productFilter.Count > 0)
+            {
+                itemsForChart = itemsForChart.Where(i => productFilter.Contains(i.DrinkName));
+            }
+
+            var popularDrinks = itemsForChart
+                .GroupBy(i => i.DrinkName)
+                .Select(g => new {
+                    Name = g.Key,
+                    Count = g.Sum(i => i.Quantity)
+                })
+                .OrderByDescending(g => g.Count)
+                .ToList();
+
+            // Pass everything to the View
+            ViewBag.SalesLabels = salesOverTime.Select(s => s.Date).ToList();
+            ViewBag.SalesValues = salesOverTime.Select(s => s.Total).ToList();
+            ViewBag.DrinkLabels = popularDrinks.Select(p => p.Name).ToList();
+            ViewBag.DrinkValues = popularDrinks.Select(p => p.Count).ToList();
+
             return View();
         }
 
