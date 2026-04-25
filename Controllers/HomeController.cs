@@ -7,6 +7,13 @@ namespace CoffeeShopMVC.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public HomeController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -28,7 +35,7 @@ namespace CoffeeShopMVC.Controllers
 
             if (!string.IsNullOrWhiteSpace(query))
             {
-                var apiKey = "qJjwWaC9tV7wGlMrr9HkQYyiYeFmD4YXlYWDOVlb";
+                var apiKey = _configuration["ApiSettings:ApiKey"];
                 var url = $"https://api.api-ninjas.com/v1/nutrition?query={Uri.EscapeDataString(query)}";
 
                 using var client = new HttpClient();
@@ -40,29 +47,32 @@ namespace CoffeeShopMVC.Controllers
                 if (response.IsSuccessStatusCode && json.Trim().StartsWith("["))
                 {
                     using var document = JsonDocument.Parse(json);
-
                     foreach (var item in document.RootElement.EnumerateArray())
                     {
                         nutritionItems.Add(new NutritionItem
                         {
-                            Name = item.GetProperty("name").ToString(),
-                            Calories = item.GetProperty("calories").ToString(),
-                            ServingSizeG = item.GetProperty("serving_size_g").ToString(),
-                            FatTotalG = item.GetProperty("fat_total_g").ToString(),
-                            ProteinG = item.GetProperty("protein_g").ToString(),
-                            CarbohydratesTotalG = item.GetProperty("carbohydrates_total_g").ToString(),
-                            SugarG = item.GetProperty("sugar_g").ToString()
+                            Name = GetValue(item, "name"),
+                            ServingSizeG = GetValue(item, "serving_size_g"),
+                            FatTotalG = GetValue(item, "fat_total_g"),
+                            CarbohydratesTotalG = GetValue(item, "carbohydrates_total_g"),
+                            SugarG = GetValue(item, "sugar_g")
                         });
                     }
-                }
-                else
-                {
-                    ViewBag.Error = json;
                 }
             }
 
             ViewBag.Query = query;
             return View(nutritionItems);
+        }
+
+        private string GetValue(JsonElement item, string propertyName)
+        {
+            if (item.TryGetProperty(propertyName, out var value))
+            {
+                return value.ToString();
+            }
+
+            return "";
         }
 
         public IActionResult Privacy()
