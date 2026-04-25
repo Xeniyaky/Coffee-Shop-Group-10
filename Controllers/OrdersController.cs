@@ -14,13 +14,9 @@ namespace CoffeeShopMVC.Controllers
             _context = context;
         }
 
-        // temporary in-memory storage
-        private static List<Order> orders = new List<Order>();
-
-        // READ (View all orders)
+        // READ: View all orders
         public async Task<IActionResult> Index()
         {
-            // The .Include(o => o.OrderItems) is mandatory!
             var orders = await _context.Orders
                                        .Include(o => o.OrderItems)
                                        .ToListAsync();
@@ -35,109 +31,122 @@ namespace CoffeeShopMVC.Controllers
 
         // POST: Create order
         [HttpPost]
-        public IActionResult Create(string CustomerName, string[] DrinkItems, string[] Sizes, int[] Quantities)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Order order)
         {
-            // 1. Validation: Ensure we actually have items to add
-            if (DrinkItems == null || DrinkItems.Length == 0)
+            // Clean out any empty items the user might have left
+            order.OrderItems.RemoveAll(i => string.IsNullOrEmpty(i.DrinkName));
+
+            if (order.OrderItems.Any())
             {
-                ModelState.AddModelError("", "You must add at least one item to the order.");
-                return View();
+                order.OrderDate = DateTime.Now;
+
+                // FORCED CALCULATION: This ignores any previous totals and calculates fresh
+                order.Total = order.OrderItems.Sum(item => item.Quantity * item.Price);
+
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            // 2. Create the Master Order
-            var newOrder = new Order
-            {
-                CustomerName = CustomerName,
-                OrderDate = DateTime.Now,
-                OrderItems = new List<OrderItem>(),
-                Total = 0 // We will calculate this in the loop
-            };
-
-            decimal grandTotal = 0;
-
-            // 3. Loop through the arrays and add OrderItems
-            for (int i = 0; i < DrinkItems.Length; i++)
-            {
-                // Skip any empty rows if the user clicked "Add" but didn't type anything
-                if (string.IsNullOrWhiteSpace(DrinkItems[i])) continue;
-
-                var item = new OrderItem
-                {
-                    DrinkName = DrinkItems[i],
-                    Size = Sizes[i],
-                    Quantity = Quantities[i]
-                };
-
-                // Simple Pricing Logic: $5 per drink (adjust as needed)
-                grandTotal += (Quantities[i] * 5.00m);
-
-                newOrder.OrderItems.Add(item);
-            }
-
-            newOrder.Total = grandTotal;
-
-            // 4. Save to Database
-            _context.Orders.Add(newOrder);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
-        // GET: Edit page
-        public IActionResult Edit(int id)
-        {
-            var order = orders.FirstOrDefault(o => o.Id == id);
             return View(order);
         }
 
-        // POST: Edit order
-        [HttpPost]
-        public IActionResult Edit(Order updatedOrder)
+        // GET: Edit page
+        // GET: Orders/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            // 1. Pull the existing order from the database, including its items
-            var order = _context.Orders
-                                .Include(o => o.OrderItems)
-                                .FirstOrDefault(o => o.Id == updatedOrder.Id);
+            if (id == null) return NotFound();
 
-            if (order != null)
+            // Mandatory: .Include(o => o.OrderItems) so the items load into the Edit fields
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (order == null) return NotFound();
+
+            return View(order);
+        }
+
+        // POST: Orders/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Order order)
+        {
+            if (id != order.Id) return NotFound();
+
+            try
             {
-                // 2. Update the master info
-                order.CustomerName = updatedOrder.CustomerName;
+                // 1. Fetch the existing order from the DB including its current items
+                var existingOrder = await _context.Orders
+                    .Include(o => o.OrderItems)
+                    .FirstOrDefaultAsync(o => o.Id == id);
 
-                // Note: For a multi-item order, you usually edit items in a separate logic
-                // For now, we update the Total if it was changed
-                order.Total = updatedOrder.Total;
+                if (existingOrder == null) return NotFound();
 
-                // 3. Save to the database
-                _context.SaveChanges();
+                // 2. Update the top-level info
+                existingOrder.CustomerName = order.CustomerName;
+
+                // 3. DATABASE SYNC: 
+                // Remove the old items from the database first
+                _context.OrderItems.RemoveRange(existingOrder.OrderItems);
+
+                // 4. PRICING LOGIC:
+                // Calculate the fresh total based on the new prices and quantities from the form
+                if (order.OrderItems != null && order.OrderItems.Any())
+                {
+                    // Filter out any blank rows the user might have added accidentally
+                    var validItems = order.OrderItems.Where(i => !string.IsNullOrWhiteSpace(i.DrinkName)).ToList();
+
+                    existingOrder.OrderItems = validItems;
+                    existingOrder.Total = validItems.Sum(i => i.Quantity * i.Price);
+                }
+                else
+                {
+                    existingOrder.Total = 0;
+                }
+
+                // 5. Save everything
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            return RedirectToAction("Index");
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Orders.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
         // GET: Delete page
         public async Task<IActionResult> Delete(int? id)
         {
-            // You MUST include OrderItems here or the list will be empty on the delete page
+            if (id == null) return NotFound();
+
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            if (order == null) return NotFound();
             return View(order);
         }
 
         // POST: Delete order
-        [HttpPost]
-        public IActionResult DeleteConfirmed(int id)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var order = orders.FirstOrDefault(o => o.Id == id);
-
+            var order = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
             if (order != null)
             {
-                orders.Remove(order);
+                _context.Orders.Remove(order);
+                await _context.SaveChangesAsync(); // Fixed: Added await and Async
             }
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

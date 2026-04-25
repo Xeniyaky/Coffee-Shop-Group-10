@@ -24,12 +24,11 @@
         </ul>
         <p><strong>Total Price:</strong> $@Model.Total.ToString("F2")</p>
 
-    <form asp-action="DeleteConfirmed" method="post">
-      <input type="hidden" asp-for="Id" />
-
-      <button type="submit">Delete Order</button>
-      <a asp-action="Index" class="btn">Cancel</a>
-    </form>
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-brown">Delete Order</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
 
   </section>
 </main>

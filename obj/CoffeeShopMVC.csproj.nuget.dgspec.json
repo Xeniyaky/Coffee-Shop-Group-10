@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj": {}
+    "C:\\Users\\ChrisN\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj": {
+    "C:\\Users\\ChrisN\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj",
+        "projectUniqueName": "C:\\Users\\ChrisN\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj",
         "projectName": "CoffeeShopMVC",
-        "projectPath": "C:\\Users\\Usuario\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\source\\repos\\Coffee-Shop-Group-10\\obj\\",
+        "projectPath": "C:\\Users\\ChrisN\\source\\repos\\Coffee-Shop-Group-10\\CoffeeShopMVC.csproj",
+        "packagesPath": "C:\\Users\\ChrisN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ChrisN\\source\\repos\\Coffee-Shop-Group-10\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ChrisN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -30,7 +30,6 @@
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -45,11 +44,10 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore.Design": {
@@ -88,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.202/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

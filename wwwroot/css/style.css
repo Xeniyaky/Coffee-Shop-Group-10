@@ -76,12 +76,6 @@ body {
     font-weight: bold;
 }
 
-/* Table Header Brown */
-.table-dark-custom {
-    background-color: #4b3621 !important;
-    color: #f5f5dc !important;
-}
-
 /* Background Cream */
 body {
     background-color: #f3ede4;
@@ -92,4 +86,36 @@ body {
     border-radius: 20px;
     border: none;
     background-color: #fffaf0;
+}
+
+/* Fix for the rounded corners cutting off the header color */
+.table-responsive {
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #4b3621; /* Matches the header */
+}
+
+/* Optional: Subtle cream zebra striping for the rows */
+table.table tbody tr:nth-of-type(odd) {
+    background-color: #fffaf0;
+}
+
+/* Force the header background and color */
+.table thead, .table thead tr, .table thead th {
+    background-color: #4b3621 !important;
+    color: #f5f5dc !important;
+    border: none !important;
+    vertical-align: middle;
+}
+
+/* Ensure the white background for the rounded container doesn't peek through */
+.table-responsive {
+    background-color: #4b3621; /* Matches header */
+    border-radius: 15px;
+    padding: 0;
+    border: 1px solid #4b3621;
+}
+
+.table tbody {
+    background-color: #ffffff; /* Keeps rows white */
 }

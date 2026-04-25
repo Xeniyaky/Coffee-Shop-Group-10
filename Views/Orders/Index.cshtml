@@ -1,61 +1,104 @@
 @model List<CoffeeShopMVC.Models.Order>
 
 <main class="container mt-5">
-    <section class="card p-4 shadow-sm">
-        <h2 class="mb-4">Current Coffee Orders</h2>
+    <section class="card p-4 shadow-sm" style="background-color: #fffaf0; border-radius: 20px;">
+        <h2 class="mb-4" style="color: #4b3621;">Current Coffee Orders</h2>
 
         <div class="mb-3">
             <a asp-action="Create" class="btn btn-brown">Create New Order</a>
         </div>
 
-        <div class="table-responsive shadow-sm" style="border-radius: 15px; overflow: hidden; border: 1px solid #e0e0e0;">
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Main Item</th> <th>Total Qty</th> <th>Total Price</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+        <div class="table-responsive shadow-sm" style="border-radius: 15px; overflow: hidden; border: 1px solid #4b3621;">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Main Item</th>
+                        <th class="text-center">Total Qty</th>
+                        <th class="text-center">Total Price</th>
+                        <th>Date</th>
+                        <th class="text-center" style="width: 120px;">Actions</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var order in Model)
+                <tbody>
+                    @if (Model != null && Model.Any())
                     {
-                        <tr>
-                            <td>@order.Id</td>
-                            <td>@order.CustomerName</td>
-                            <td>
-                                @(order.OrderItems?.FirstOrDefault()?.DrinkName ?? "No items")
-                                @(order.OrderItems?.Count > 1 ? $" (+{order.OrderItems.Count - 1} more)" : "")
-                            </td>
-                            <td>@order.OrderItems?.Sum(i => i.Quantity)</td>
-                            <td>$@order.Total.ToString("F2")</td>
-                            <td>@order.OrderDate.ToShortDateString()</td>
-                            <td>
+                        foreach (var order in Model)
+                        {
+                            <tr style="vertical-align: middle;">
+                                <td>@order.Id</td>
+                                <td class="fw-bold">@order.CustomerName</td>
+                                <td>
+                                    @(order.OrderItems?.FirstOrDefault()?.DrinkName ?? "No items")
+                                    @(order.OrderItems?.Count > 1 ? $" (+{order.OrderItems.Count - 1} more)" : "")
+                                </td>
+                                <td class="text-center">@order.OrderItems?.Sum(i => i.Quantity)</td>
+                                <td class="text-center fw-bold">$@order.Total.ToString("F2")</td>
+                                <td>@order.OrderDate.ToShortDateString()</td>
                                 <td class="text-center">
-                                    <a asp-action="Edit" asp-route-id="@order.Id" class="mx-2" style="color: #0d6efd;" title="Edit">
+                                    <a asp-action="Edit" asp-route-id="@order.Id" class="mx-1" style="color: #0d6efd;" title="Edit">
                                         <i class="bi bi-pencil-square" style="font-size: 1.2rem;"></i>
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@order.Id" class="mx-2" style="color: #dc3545;" title="Delete">
+
+                                    <button type="button" class="btn btn-link text-danger p-0 mx-1" onclick="confirmDelete('@order.Id')" title="Delete">
                                         <i class="bi bi-trash3-fill" style="font-size: 1.2rem;"></i>
-                                    </a>
+                                    </button>
                                 </td>
-                            </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center p-4 text-muted">No orders found.</td>
                         </tr>
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-center">No orders found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </div>
     </section>
 </main>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #fffaf0; border-radius: 20px; border: 2px solid #4b3621;">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" style="color: #4b3621;">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="bi bi-exclamation-octagon-fill text-danger" style="font-size: 3.5rem;"></i>
+                <p class="mt-3 fs-5 fw-bold" style="color: #4b3621;">Delete this order?</p>
+                <p class="text-muted">This will permanently remove the order from the system.</p>
+            </div>
+            <div class="modal-footer border-0 justify-content-center pb-4">
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal" style="border-radius: 10px; min-width: 120px;">
+                    Cancel
+                </button>
+
+                <form id="deleteForm" method="post" class="ms-2">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-brown px-4" style="border-radius: 10px; min-width: 120px;">
+                        Delete Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete(orderId) {
+            // Dynamically set the form's action to include the Order ID
+            const deleteForm = document.getElementById('deleteForm');
+            deleteForm.action = '/Orders/Delete/' + orderId;
+
+            // Trigger the Bootstrap Modal
+            const myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            myModal.show();
+        }
+    </script>
+}
