@@ -1,49 +1,43 @@
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: "SN Pro", sans-serif;
+    font-weight: 400;
     margin: 0;
     margin-bottom: 60px;
-    background-color: #e0d8c8; /* Your New Warm Cream */
+    background-color: #e0d8c8;
     color: #3e2c23;
 }
 
-/* --- Header & Navbar --- */
-/* --- Slimmer Navbar --- */
 .navbar {
     background-color: #6d4c41 !important;
     border-bottom: 4px solid #bcaaa4;
-    /* Reduced top and bottom padding from 15px/10px to 5px */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    min-height: 50px; /* Ensures it doesn't collapse too far */
+    min-height: 50px; 
 }
 
-/* --- Logo Adjustment --- */
 .navbar-logo {
-    height: 70px; /* Keeps your logo size but controls the container */
+    height: 70px; 
     width: auto;
     margin-right: 15px;
-    /* Removes any default margin that might be pushing the bar wider */
     margin-top: 0;
     margin-bottom: 0;
     vertical-align: middle;
 }
 
-/* --- Nav Links Alignment --- */
 .nav-link {
     color: #e0d8c8 !important;
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
-    line-height: 45px; /* Matches the logo height to keep text centered */
+    line-height: 45px; 
 }
 
 .navbar-brand {
-    color: #e0d8c8 !important; /* Cream text on Brown background */
+    color: #e0d8c8 !important; 
     font-weight: 600;
 }
 
-/* --- Content Card --- */
 .card {
-    background-color: #fff8e9; /* Your new warm cream color */
+    background-color: #fff8e9; 
     padding: 30px;
     border-radius: 15px;
     max-width: 950px;
@@ -52,7 +46,6 @@ body {
     border: 1px solid #d7ccc8;
 }
 
-/* --- Buttons --- */
 .btn, button {
     background-color: #6d4c41;
     color: #e0d8c8 !important;
@@ -71,36 +64,32 @@ body {
 }
 
 .nav-active-bg {
-    background-color: rgba(255, 255, 255, 0.2); /* A subtle white highlight */
+    background-color: rgba(255, 255, 255, 0.2); 
     border-radius: 5px;
     font-weight: bold;
 }
 
-/* Background Cream */
 body {
     background-color: #f3ede4;
 }
 
-/* Rounded Card Style */
 .card {
     border-radius: 20px;
     border: none;
     background-color: #fffaf0;
 }
 
-/* Fix for the rounded corners cutting off the header color */
+
 .table-responsive {
     border-radius: 15px;
     overflow: hidden;
-    border: 1px solid #4b3621; /* Matches the header */
+    border: 1px solid #4b3621; 
 }
 
-/* Optional: Subtle cream zebra striping for the rows */
 table.table tbody tr:nth-of-type(odd) {
     background-color: #fffaf0;
 }
 
-/* Force the header background and color */
 .table thead, .table thead tr, .table thead th {
     background-color: #4b3621 !important;
     color: #f5f5dc !important;
@@ -108,14 +97,13 @@ table.table tbody tr:nth-of-type(odd) {
     vertical-align: middle;
 }
 
-/* Ensure the white background for the rounded container doesn't peek through */
 .table-responsive {
-    background-color: #4b3621; /* Matches header */
+    background-color: #4b3621; 
     border-radius: 15px;
     padding: 0;
     border: 1px solid #4b3621;
 }
 
 .table tbody {
-    background-color: #ffffff; /* Keeps rows white */
+    background-color: #ffffff; 
 }

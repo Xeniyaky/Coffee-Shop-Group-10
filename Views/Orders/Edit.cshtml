@@ -71,7 +71,6 @@
             const newRow = document.createElement('div');
             newRow.className = 'row item-row mb-3 align-items-center';
             
-            // Note: We do NOT include a hidden ID input for NEW items
             newRow.innerHTML = `
                 <div class="col-md-4">
                     <input name="OrderItems[${index}].DrinkName" class="form-control" placeholder="Item Name" required />
@@ -101,18 +100,18 @@
                 row.querySelectorAll('input, select').forEach(element => {
                     const name = element.getAttribute('name');
                     if (name) {
-                        // This regex updates OrderItems[AnyNumber] to the current index
+                        // Updates OrderItems[AnyNumber] to the current index
                         element.setAttribute('name', name.replace(/\[\d+\]/g, `[${index}]`));
                     }
                 });
             });
         }
 
-        // IMPORTANT: Your delete listener MUST call this
+        // For delete function
         document.addEventListener('click', function (e) {
             if (e.target.closest('.remove-btn')) {
                 e.target.closest('.item-row').remove();
-                reIndexItems(); // <--- This fixes the "Jam" bug
+                reIndexItems(); 
             }
         });
     </script>

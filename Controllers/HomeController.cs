@@ -10,10 +10,8 @@ namespace CoffeeShopMVC.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        // 1. Add this line
         private readonly Data.ApplicationDbContext _context;
 
-        // 2. Update the constructor to include the context
         public HomeController(IConfiguration configuration, Data.ApplicationDbContext context)
         {
             _configuration = configuration;
@@ -75,10 +73,10 @@ namespace CoffeeShopMVC.Controllers
                 .ToList();
 
             // --- DATA FOR CHART 2: Product Popularity ---
-            // Start with all items from those orders
+            // All items from selected orders
             var itemsForChart = filteredOrders.SelectMany(o => o.OrderItems).AsQueryable();
 
-            // CRITICAL FIX: Re-filter the items so 'hitchhikers' (unselected items) don't show on the wheel
+            // Filter out unselected items, double-check
             if (productFilter != null && productFilter.Count > 0)
             {
                 itemsForChart = itemsForChart.Where(i => productFilter.Contains(i.DrinkName));

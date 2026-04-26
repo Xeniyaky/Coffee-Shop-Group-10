@@ -17,12 +17,12 @@
         </div>
 
         <div class="member">
-            <img src="~/images/chris.jpg" alt="Chris" class="profile-pic" /> <h3>Christopher Nikiforou</h3>
+            <img src="~/images/chrisheadshot.jpg" alt="Chris" class="profile-pic" /> <h3>Christodoulos Nikiforou</h3>
             <p class="role">Database Integration</p>
         </div>
 
         <div class="member">
-            <img src="~/images/adanma.jpg" alt="Adanma" class="profile-pic" /> <h3>Adanma Okoroafor</h3>
+            <img src="~/images/adanmaheadshot.jpg" alt="Adanma" class="profile-pic" /> <h3>Adanma Okoroafor</h3>
             <p class="role">ERD Design & API Integration</p>
         </div>
 
@@ -49,16 +49,20 @@
 <style>
     .team-grid {
         display: flex;
-        justify-content: center; /* Changed to center for better balance */
+        justify-content: center;
         flex-wrap: wrap;
         margin-top: 30px;
-        gap: 20px; /* Adds space between members */
+        gap: 20px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .member {
         text-align: center;
         margin: 15px;
-        width: 220px;
+        width: calc(50% - 50px);
+        min-width: 220px;
     }
 
     .profile-pic {
@@ -66,9 +70,13 @@
         height: 150px;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid #f8f9fa;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 3px solid #fff;
+        background-color: #fff;
+        box-shadow: 0 8px 10px -5px rgba(0,0,0,0.3);
         margin-bottom: 10px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .role {
@@ -77,7 +85,7 @@
     }
 
     .repo-link-box {
-        background-color: #f8f9fa;
+        background-color: #e0d8c8;
         padding: 25px;
         border-radius: 8px;
         margin-top: 40px;

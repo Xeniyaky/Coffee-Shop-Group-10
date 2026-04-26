@@ -34,14 +34,13 @@ namespace CoffeeShopMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Order order)
         {
-            // Clean out any empty items the user might have left
+            // Clean out empty items 
             order.OrderItems.RemoveAll(i => string.IsNullOrEmpty(i.DrinkName));
 
             if (order.OrderItems.Any())
             {
                 order.OrderDate = DateTime.Now;
 
-                // FORCED CALCULATION: This ignores any previous totals and calculates fresh
                 order.Total = order.OrderItems.Sum(item => item.Quantity * item.Price);
 
                 _context.Add(order);
@@ -57,7 +56,6 @@ namespace CoffeeShopMVC.Controllers
         {
             if (id == null) return NotFound();
 
-            // Mandatory: .Include(o => o.OrderItems) so the items load into the Edit fields
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -86,15 +84,12 @@ namespace CoffeeShopMVC.Controllers
                 // 2. Update the top-level info
                 existingOrder.CustomerName = order.CustomerName;
 
-                // 3. DATABASE SYNC: 
-                // Remove the old items from the database first
+                // 3. DATABASE SYNC: Remove old items
                 _context.OrderItems.RemoveRange(existingOrder.OrderItems);
 
-                // 4. PRICING LOGIC:
-                // Calculate the fresh total based on the new prices and quantities from the form
+                // 4. PRICING LOGIC: Prices * Quantity
                 if (order.OrderItems != null && order.OrderItems.Any())
                 {
-                    // Filter out any blank rows the user might have added accidentally
                     var validItems = order.OrderItems.Where(i => !string.IsNullOrWhiteSpace(i.DrinkName)).ToList();
 
                     existingOrder.OrderItems = validItems;
@@ -144,7 +139,7 @@ namespace CoffeeShopMVC.Controllers
             if (order != null)
             {
                 _context.Orders.Remove(order);
-                await _context.SaveChangesAsync(); // Fixed: Added await and Async
+                await _context.SaveChangesAsync(); 
             }
             return RedirectToAction(nameof(Index));
         }

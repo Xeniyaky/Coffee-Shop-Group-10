@@ -4,48 +4,161 @@
 @model List<CoffeeShopMVC.Models.NutritionItem>
 
 <main>
-  <section class="card">
-    <h2>Nutrition Tracker</h2>
+    <section class="card">
+        <h2>Nutrition Tracker</h2>
 
-    <p>
-      Search for a food or drink to view nutrition information such as carbohydrates, fat, and sugar.
-    </p>
+        <p>
+            At Brew Haven, we believe transparency is key to a healthy lifestyle!
+            This nutritional tracker is designed to better help businesses support their customers by providing
+            access to essential nutrition information.
+        </p>
 
-    <form method="get" asp-action="Nutrition">
-      <label>Food or Drink</label>
-      <input type="text" name="query" value="@ViewBag.Query" placeholder="Example: milk" />
-      <button type="submit">Search Nutrition</button>
-    </form>
+        <form method="get" asp-action="Nutrition">
+            <label>Food or Drink</label>
+            <input type="text" name="query" value="@ViewBag.Query" placeholder="Example: milk" />
+            <button type="submit">Search Nutrition</button>
+        </form>
 
-    @if (Model != null && Model.Any())
-    {
-      <table style="margin-top: 15px;">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Serving (g)</th>
-            <th>Carbs</th>
-            <th>Fat</th>
-            <th>Sugar</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach (var item in Model)
-          {
-            <tr>
-              <td>@item.Name</td>
-              <td>@item.ServingSizeG</td>
-              <td>@item.CarbohydratesTotalG</td>
-              <td>@item.FatTotalG</td>
-              <td>@item.SugarG</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-    else if (!string.IsNullOrEmpty(ViewBag.Query))
-    {
-      <p style="margin-top: 15px;">No results found. Try something simple like "milk" or "banana".</p>
-    }
-  </section>
+        @if (Model != null && Model.Any())
+        {
+            <table style="margin-top: 15px;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Serving (g)</th>
+                        <th>Carbs</th>
+                        <th>Fat</th>
+                        <th>Sugar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.ServingSizeG</td>
+                            <td>@item.CarbohydratesTotalG</td>
+                            <td>@item.FatTotalG</td>
+                            <td>@item.SugarG</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (!string.IsNullOrEmpty(ViewBag.Query))
+        {
+            <p style="margin-top: 15px;">No results found. Try something simple like "milk" or "banana".</p>
+        }
+
+        <hr class="my-5" />
+
+        <div class="menu-section mb-5">
+            <h2 class="menu-category-title"><i class="fas fa-mug-hot"></i> Hot Classics</h2>
+            <div class="table-responsive">
+                <table class="table menu-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Latte</td><td>Espresso with milk</td><td>$4.50</td></tr>
+                        <tr><td>Cappuccino</td><td>Foam and espresso</td><td>$4.00</td></tr>
+                        <tr><td>Mocha</td><td>Chocolate coffee</td><td>$5.00</td></tr>
+                        <tr><td>Americano</td><td>Espresso with water</td><td>$3.00</td></tr>
+                        <tr><td>Flat White</td><td>Smooth milk coffee</td><td>$4.25</td></tr>
+                        <tr><td>Macchiato</td><td>Espresso with foam</td><td>$3.75</td></tr>
+                        <tr><td>Espresso</td><td>Strong coffee shot</td><td>$2.50</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="menu-section mb-5">
+            <h2 class="menu-category-title"><i class="fas fa-ice-cream"></i> Chilled Favorites</h2>
+            <div class="table-responsive">
+                <table class="table menu-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Iced Coffee</td><td>Chilled brewed coffee</td><td>$3.50</td></tr>
+                        <tr><td>Cold Brew</td><td>Slow steeped coffee</td><td>$4.75</td></tr>
+                        <tr><td>Frappuccino</td><td>Blended iced drink</td><td>$5.50</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="menu-section mb-5">
+            <h2 class="menu-category-title"><i class="fas fa-bread-slice"></i> Bakery & Pastries</h2>
+            <div class="table-responsive">
+                <table class="table menu-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Butter Croissant</td><td>Flaky, golden-brown French pastry</td><td>$3.75</td></tr>
+                        <tr><td>Blueberry Muffin</td><td>Bursting with fresh berries and crumble top</td><td>$3.50</td></tr>
+                        <tr><td>Banana Nut Bread</td><td>Toasted slice with walnuts and honey drizzle</td><td>$4.00</td></tr>
+                        <tr><td>Chocolate Chip Cookie</td><td>Soft-baked with Belgian chocolate chunks</td><td>$2.75</td></tr>
+                        <tr><td>Cheese Danish</td><td>Sweet cream cheese center in puff pastry</td><td>$4.25</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <style>
+                    .menu-category-title {
+                        font-family: 'SN Pro', sans-serif;
+                        color: #3e2c23;
+                        border-bottom: 2px solid #3e2c23;
+                        padding-bottom: 10px;
+                        margin-bottom: 20px;
+                        letter-spacing: 1px;
+                    }
+
+                    .menu-table {
+                        background-color: rgba(255, 255, 255, 0.5);
+                        border-radius: 8px;
+                        overflow: hidden;
+                    }
+
+                        .menu-table thead {
+                            background-color: #3e2c23;
+                            color: #e0d8c8;
+                        }
+
+                        .menu-table th {
+                            font-family: 'SN Pro', sans-serif;
+                            font-weight: 600;
+                            border: none;
+                        }
+
+                        .menu-table td {
+                            font-family: 'SN Pro', sans-serif;
+                            vertical-align: middle;
+                            border-color: rgba(62, 44, 35, 0.1);
+                        }
+
+                        .menu-table tr:hover {
+                            background-color: rgba(255, 255, 255, 0.8);
+                        }
+
+                    .italic {
+                        font-style: italic;
+                        color: #666;
+                    }
+        </style>
+    </section>
 </main>

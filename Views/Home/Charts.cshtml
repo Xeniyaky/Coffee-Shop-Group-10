@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Analytics";
 
-    // Capture current query strings as a list for the multi-select logic
     var selectedProducts = Context.Request.Query["productFilter"].ToList();
     var currentMin = Context.Request.Query["minPrice"];
     var currentStart = Context.Request.Query["startDate"];
@@ -76,7 +75,7 @@
 
                 @foreach (var product in selectedProducts)
                 {
-                    // Logic to remove JUST this product from the current list
+                    // Remove JUST this product from the current list
                     var otherProducts = selectedProducts.Where(p => p != product).ToList();
                     var removeUrl = Url.Action("Charts", new
                     {

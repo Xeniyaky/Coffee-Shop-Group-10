@@ -1,6 +1,77 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container mt-5">
+    <div class="policy-header text-center mb-5">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+        <p class="lead">Last Updated: April 2026</p>
+    </div>
+
+    <div class="policy-content card p-4 shadow-sm">
+        <section class="mb-4">
+            <h2 class="h4 text-brown">1. Educational Purpose</h2>
+            <p>
+                Brew Haven is a university group project developed for academic purposes. This website is designed
+                to demonstrate MVC architecture, API integration, and database management. It is not a commercial
+                entity and does not sell products or services.
+            </p>
+        </section>
+
+        <section class="mb-4">
+            <h2 class="h4 text-brown">2. Information Collection</h2>
+            <p>
+                Currently, Brew Haven does not collect personally identifiable information (PII) from its visitors.
+                Any data entered into the <strong>Nutrition Tracker</strong> or <strong>Order Management</strong>
+                simulations is stored locally for session demonstration purposes only and is not shared with third parties.
+            </p>
+        </section>
+
+        <section class="mb-4">
+            <h2 class="h4 text-brown">3. Third-Party APIs</h2>
+            <p>
+                Our site integrates with external APIs (nutritional database) to provide
+                real-time content. These third-party services may have their own privacy policies regarding
+                how they handle data requests. We encourage users to review those policies independently.
+            </p>
+        </section>
+
+        <section class="mb-4">
+            <h2 class="h4 text-brown">4. Security</h2>
+            <p>
+                While we strive to use industry-standard development practices within our ASP.NET Core environment,
+                please remember that this is a project environment. No method of transmission over the internet
+                is 100% secure.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="h4 text-brown">5. Contact Us</h2>
+            <p>
+                If you have questions about this project or the technical implementation of our features, please
+                refer to our <a href="https://github.com/Xeniyaky/Coffee-Shop-Group-10" target="_blank">GitHub Repository</a>.
+            </p>
+        </section>
+    </div>
+</div>
+
+<style>
+    .text-brown {
+        color: #3e2c23;
+        font-weight: 600;
+        border-left: 4px solid #3e2c23;
+        padding-left: 15px;
+    }
+
+    .policy-content {
+        background-color: rgba(255, 255, 255, 0.7);
+        border: none;
+        border-radius: 12px;
+        line-height: 1.8;
+    }
+
+    .policy-header h1 {
+        font-family: 'Outfit', sans-serif;
+        color: #3e2c23;
+    }
+</style>

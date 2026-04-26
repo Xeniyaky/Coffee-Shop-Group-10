@@ -87,18 +87,18 @@
                 row.querySelectorAll('input, select').forEach(element => {
                     const name = element.getAttribute('name');
                     if (name) {
-                        // This regex updates OrderItems[AnyNumber] to the current index
+                        // Updates OrderItems[AnyNumber] to the current index
                         element.setAttribute('name', name.replace(/\[\d+\]/g, `[${index}]`));
                     }
                 });
             });
         }
 
-        // IMPORTANT: Your delete listener MUST call this
+        // For delete function
         document.addEventListener('click', function (e) {
             if (e.target.closest('.remove-btn')) {
                 e.target.closest('.item-row').remove();
-                reIndexItems(); // <--- This fixes the "Jam" bug
+                reIndexItems(); 
             }
         });
     </script>
