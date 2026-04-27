@@ -1,21 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home";
-}
-<main>
+﻿<main>
   <section class="card">
     <h2>Welcome to Brew Haven</h2>
+
     <p>
-      This project is a dynamic MVC coffee shop management system.
-      It is designed to help manage customer orders, menu items, inventory, and sales data.
+      This system is designed to support coffee shop staff during daily operations.
+      Cashiers can use it to quickly enter customer orders, manage existing orders,
+      and reference menu items while taking orders.
     </p>
 
     <p>
-      The website includes working CRUD pages, interactive charts, an About Us page,
-      a nutrition API tracker, and a Botpress chatbot that helps users with coffee shop questions and customer support.
+      Below is a preview of popular menu items available in the system.
     </p>
+  </section>
 
+  <section class="card menu-section">
+    <h2>Popular Menu Items</h2>
+
+    <div class="menu-grid">
+
+      <div class="menu-item">
+        <img src="~/images/latte.jpg" alt="Latte" />
+        <h3>Latte</h3>
+        <p>Espresso with milk</p>
+      </div>
+
+      <div class="menu-item">
+        <img src="~/images/cappuccino.jpg" alt="Cappuccino" />
+        <h3>Cappuccino</h3>
+        <p>Foam and espresso</p>
+      </div>
+
+      <div class="menu-item">
+        <img src="~/images/iced-coffee.jpg" alt="Iced Coffee" />
+        <h3>Iced Coffee</h3>
+        <p>Chilled brewed coffee</p>
+      </div>
+
+      <div class="menu-item">
+        <img src="~/images/croissant.jpg" alt="Butter Croissant" />
+        <h3>Butter Croissant</h3>
+        <p>Flaky, golden-brown French pastry</p>
+      </div>
+
+      <div class="menu-item">
+        <img src="~/images/muffin.jpg" alt="Blueberry Muffin" />
+        <h3>Blueberry Muffin</h3>
+        <p>Bursting with fresh berries and crumble top</p>
+      </div>
+
+    </div>
   </section>
 </main>
-
-<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/04/08/13/20260408132514-UPB6PFI2.js" defer></script>
