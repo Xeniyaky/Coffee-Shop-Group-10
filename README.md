@@ -14,14 +14,9 @@ The system integrates with the **API Ninjas Nutrition API** to provide customers
 * **Endpoint:** `https://api.api-ninjas.com/v1/nutrition?query={item}`
 * **Usage:** When a user views a menu item, the application fetches calories, protein, and sugar content dynamically to display on the "Nutrition Info" page.
 
-### Data Model (ERD)
-The database architecture is designed for referential integrity and performance. The core entities include:
-* **Customers:** Stores user profiles and contact information.
-* **Orders:** Tracks transaction details and timestamps.
-* **OrderItems:** A junction table facilitating a many-to-many relationship between Orders and Menu Items.
-* **Menu Items:** Contains pricing, category, and description data.
+## 📊 Entity Relationship Diagram (ERD)
 
-> **Note:** The updated ERD diagram can be found in the `/docs/assets` folder of this repository.
+![ERD](wwwroot/images/erd.png)
 
 ### CRUD Implementation
 Brew Haven follows the standard MVC pattern for full CRUD operations across all major entities:
