@@ -51,4 +51,4 @@ Brew Haven follows the standard MVC pattern for full CRUD operations across all 
 * **Group 10**
 
 ## 🔗 Repository
-[View Project on GitHub](https://github.com/your-username/Coffee-Shop-Group-10)
+[View Project on GitHub](https://github.com/Xeniyaky/Coffee-Shop-Group-10)
